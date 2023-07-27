@@ -1,7 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./DefaultHeader.css";
+import { useSelector } from "react-redux";
+import { AuthUserActionType, IAuthUser } from "../../auth/types";
+import { useDispatch } from "react-redux";
+import http from "../../../http";
 
 const DefaultHeader = () => {
+  const navigator = useNavigate();
+  const {isAuth, user} = useSelector ((store: any) => store.auth as IAuthUser);
+
+  const dispatch = useDispatch();
+
+  const logout = (e: any) => {
+    e.preventDefault();
+    localStorage.removeItem('token');
+    http.defaults.headers.common[
+      "Authorization"
+      ] = ``;
+      dispatch({type: AuthUserActionType.LUGOUT_USER});
+      navigator('/');
+  }
   return (
     <>
       <header data-bs-theme="dark">
@@ -37,17 +55,31 @@ const DefaultHeader = () => {
                   <a className="nav-link disabled">Disabled</a>
                 </li>
               </ul>
-              <form className="d-flex" role="search">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-outline-success" type="submit">
-                  Search
-                </button>
-              </form>
+              {isAuth? (<ul className="navbar-nav ">
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/profile">
+                    {user?.email}
+                  </Link>
+
+              </li>
+                <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/logout" onClick={logout}>
+                    Вихід
+                  </Link>
+
+              </li>
+
+              </ul>):(
+               <ul className="navbar-nav ">
+               <li className="nav-item">
+               <Link className="nav-link active" aria-current="page" to="/login">
+                   Вхід
+                 </Link>
+
+             </li>
+
+             </ul>)}
+            
             </div>
           </div>
         </nav>
