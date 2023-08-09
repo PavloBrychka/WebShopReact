@@ -17,9 +17,11 @@ const DefaultHeader = () => {
     http.defaults.headers.common[
       "Authorization"
       ] = ``;
-      dispatch({type: AuthUserActionType.LUGOUT_USER});
+      dispatch({type: AuthUserActionType.LOGOUT_USER});
       navigator('/');
   }
+
+  const isAdmin : boolean = user?.roles==="Admin";
   return (
     <>
       <header data-bs-theme="dark">
@@ -41,11 +43,11 @@ const DefaultHeader = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <ul className="navbar-nav me-auto mb-2 mb-md-0">
-                <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/categories/create">
-                    Додати
+                {isAdmin && <li className="nav-item">
+                  <Link className="nav-link active" aria-current="page" to="/admin">
+                   Admin Panel
                   </Link>
-                </li>
+                </li>}
                 <li className="nav-item">
                   <a className="nav-link" href="#">
                     Link

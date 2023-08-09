@@ -1,5 +1,4 @@
 export interface ICategoryCreate {
-    
     "name": string,
     "priority": number|null,
     "image": string,

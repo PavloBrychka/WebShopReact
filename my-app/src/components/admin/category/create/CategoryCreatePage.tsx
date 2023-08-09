@@ -3,16 +3,14 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { ICategoryCreate } from "./types";
 import * as yup from "yup";
 import classNames from "classnames";
-import { Link, useNavigate } from "react-router-dom";
-// import http from "../../../../http";
+import { useNavigate } from "react-router-dom";
+import http from "../../../../http";
 import { ICategoryItem } from "../list/types";
-import http from "../../../http";
 
 const CategoryCreatePage = () => {
   const navigator = useNavigate();
 
   const initValues: ICategoryCreate = {
-  
     name: "",
     priority: null,
     image: "",
@@ -68,7 +66,6 @@ const CategoryCreatePage = () => {
   return (
     <>
       <h1 className="text-center">Додати категорію</h1>
-     
       <form className="col-md-6 offset-md-3" onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
